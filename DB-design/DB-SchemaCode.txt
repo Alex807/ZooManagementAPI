@@ -1,0 +1,123 @@
+// =============================
+// Zoo Management API Database Schema
+// Author: Burada Andrei Alexandru
+// Tech Stack: C#, .NET 9, MySQL
+// =============================
+
+Table Animal {
+  id int [pk, increment]
+  name varchar(100) [not null]
+  specie varchar(100)
+  image_url varchar(255) 
+  date_of_birth date
+  gender enum [note: 'Male, Female']
+  arrival_date date
+  category_id int [not null]
+  enclosure_id int
+  created_at datetime
+  updated_at datetime
+}
+
+Table Category {
+  id int [pk, increment]
+  name varchar(100) [not null]
+  description text
+}
+
+Table Enclosure {
+  id int [pk, increment]
+  name varchar(100) [not null]
+  type varchar(100)
+  capacity int
+  location varchar(150)
+}
+
+Table UserAccount {
+  id int [pk, increment]
+  username varchar(100) [unique, not null]
+  email varchar(100) [unique, not null]
+  password_hash varchar(255) [not null]
+  role_id int [not null] // e.g., main role 
+}
+
+Table UserDetails {
+  user_id int [pk, not null]
+  birth_date date
+  gender enum [note: 'Male, Female']
+  image_url varchar(255) 
+  created_at datetime
+  updated_at datetime
+}
+
+Table Role {
+  id int [pk, increment]
+  name enum [note: 'Admin, Zookeeper, Veterinarian, Visitor']
+  description text
+}
+
+Table UserRole {
+  user_id int [not null]
+  role_id int [not null]
+  assigned_at datetime
+
+  indexes {
+    (user_id, role_id) [unique]
+  }
+}
+
+Table FeedingSchedule {
+  id int [pk, increment]
+  animal_id int [not null]
+  keeper_id int [not null] 
+  food_type varchar(100)
+  quantity varchar(50)
+  feeding_time datetime
+  notes text
+  created_at datetime
+  updated_at datetime
+}
+
+Table MedicalRecord {
+  id int [pk, increment]
+  animal_id int [not null]
+  veterinarian_id int [not null] // user id with Veterinarian role
+  health_status enum [note: 'Healthy, Sick, Quarantined, Under_Treatment, Deceased']
+  date datetime
+  description text
+}
+
+Table StuffAnimalAssignment {
+  stuff_id int [not null]
+  animal_id int [not null]
+  accidents varchar[200]
+  created_at datetime
+
+  indexes {
+    (stuff_id, animal_id) [pk]
+  }
+}
+
+// ===================================================
+// RELATIONSHIPS
+// ===================================================
+
+// --- Core Animal Relations ---
+Ref: Category.id < Animal.category_id [delete: cascade, update: cascade]
+Ref: Enclosure.id < Animal.enclosure_id [delete: set null, update: cascade]
+
+// --- Feeding & Medical Relations ---
+Ref: Animal.id < FeedingSchedule.animal_id [delete: cascade, update: cascade]
+Ref: UserAccount.id < FeedingSchedule.keeper_id [delete: set null, update: cascade]
+
+Ref: Animal.id < MedicalRecord.animal_id [delete: cascade, update: cascade]
+Ref: UserAccount.id < MedicalRecord.veterinarian_id [delete: set null, update: cascade]
+
+// --- User and Role System ---
+Ref: UserAccount.id - UserDetails.user_id [delete: cascade, update: cascade]
+Ref: Role.id < UserAccount.role_id [delete: set null, update: cascade]
+Ref: UserAccount.id < UserRole.user_id [delete: cascade, update: cascade]
+Ref: Role.id < UserRole.role_id [delete: cascade, update: cascade]
+
+// --- User to Animal Assignment ---
+Ref: UserAccount.id < StuffAnimalAssignment.stuff_id [delete: cascade, update: cascade]
+Ref: Animal.id < StuffAnimalAssignment.animal_id [delete: cascade, update: cascade]
