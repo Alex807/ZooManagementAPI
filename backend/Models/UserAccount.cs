@@ -27,15 +27,15 @@ namespace backend.Models
         [Required]
         public int CurrentRoleId { get; set; }
 
-        // primary role of this user
         [ForeignKey("CurrentRoleId")]
         public virtual Role CurrentRole { get; set; } = null!;
 
-        // One-to-one relationship with UserDetails
+        // One-to-one relationship with UserDetails and Staff
         public virtual UserDetails UserDetails { get; set; } = null!;
-        
-            // Many-to-many relationship with roles through UserRole (additional roles)
-            public virtual ICollection<UserRole> UserRoles { get; set; } = new List<UserRole>();
+        public virtual Staff Staff { get; set; } = null!; //(optional) an user account as ADMIN may not have a staff record
+
+        // Many-to-many relationship with roles through UserRole (additional roles)
+        public virtual ICollection<UserRole> UserRoles { get; set; } = new List<UserRole>();
 
     }
 }

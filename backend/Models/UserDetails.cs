@@ -12,11 +12,25 @@ namespace backend.Models
         [ForeignKey("UserAccount")]
         public int UserId { get; set; }
 
+        [Required]
+        [MaxLength(100)]
+        public string FirstName { get; set; } = string.Empty;
+
+        [Required]
+        [MaxLength(100)]
+        public string LastName { get; set; } = string.Empty;
+
         [Column(TypeName = "date")]
         public DateOnly? BirthDate { get; set; }
 
         [Column(TypeName = "varchar(10)")]
         public Gender? Gender { get; set; }
+
+        [MaxLength(15)]
+        public string Phone { get; set; } = string.Empty;
+
+        [MaxLength(255)]
+        public string HomeAddress { get; set; } = string.Empty;
 
         [MaxLength(255)]
         public string? ImageUrl { get; set; }
@@ -27,15 +41,5 @@ namespace backend.Models
 
         public virtual UserAccount UserAccount { get; set; } = null!; 
 
-        // (moved) many-to-many relationship with roles is exposed on UserAccount via UserRole
-
-        // feeding schedules created by this user (if they're a zookeeper)
-        public virtual ICollection<FeedingSchedule> FeedingSchedules { get; set; } = new List<FeedingSchedule>();
-
-        // medical records created by this user (if they're a veterinarian)
-        public virtual ICollection<MedicalRecord> MedicalRecords { get; set; } = new List<MedicalRecord>();
-
-        // animal assignments for this staff member
-        public virtual ICollection<StaffAnimalAssignment> AnimalAssignments { get; set; } = new List<StuffAnimalAssignment>();
     }
 }

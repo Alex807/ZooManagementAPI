@@ -16,9 +16,9 @@ namespace backend.Models
         public RoleName Name { get; set; }
 
         [Column(TypeName = "text")]
-        public string? Description { get; set; }
+        public string Description { get; set; } = string.Empty;
 
-        //lsit with all users with this role
+        //list with all users with this role
         public virtual ICollection<UserAccount> UserAccounts { get; set; } = new List<UserAccount>();
 
         // Many-to-many relationship with users through UserRole

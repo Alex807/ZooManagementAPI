@@ -16,6 +16,10 @@ namespace backend.Models
         [Required]
         public int RoleId { get; set; }
 
+        [Required]
+        [Column(TypeName = "date")]
+        public DateTime AssignedAt { get; set; }
+
         [ForeignKey("UserAccountId")]
         public virtual UserAccount UserAccount { get; set; } = null!;
 

@@ -19,7 +19,8 @@ namespace backend.Models
         [MaxLength(100)]
         public string? Type { get; set; }
 
-        public int? Capacity { get; set; }
+        [Required]
+        public int Capacity { get; set; }
 
         [MaxLength(150)]
         public string? Location { get; set; }

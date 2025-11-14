@@ -26,11 +26,11 @@ namespace backend.Models
         [Column(TypeName = "date")] 
         public DateOnly? DateOfBirth {get; set; } 
 
-        [Column(TypeName = "varchar(10)")] 
+        [Column(TypeName = "varchar(10)")] //for enum conversion to string
         public Gender? Gender {get; set; }
 
         [Column(TypeName = "date")] 
-        public DateOnly ArrivalDate {get; set; }
+        public DateTime ArrivalDate {get; set; }
 
         [Required] 
         public int CategoryId {get; set; } //FK 
@@ -55,6 +55,6 @@ namespace backend.Models
         public virtual ICollection<MedicalRecord> MedicalRecords { get; set; } = new List<MedicalRecord>();
     
         // Collection of staff assignments for this animal 
-        public virtual ICollection<StaffAnimalAssignment> StaffAssignments { get; set; } = new List<StuffAnimalAssignment>();
+        public virtual ICollection<StaffAnimalAssignment> StaffAssignments { get; set; } = new List<StaffAnimalAssignment>();
     }
 }
