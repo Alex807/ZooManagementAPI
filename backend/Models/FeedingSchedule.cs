@@ -6,7 +6,7 @@ using backend.Enums;
 namespace backend.Models
 {
     //feeding schedule for an animal. (tracks what, when, and how much an animal is fed)
-    [Table("FeedingSchedule")]
+    [Table("Feeding_Schedule")]
     public class FeedingSchedule
     {
         [Key]

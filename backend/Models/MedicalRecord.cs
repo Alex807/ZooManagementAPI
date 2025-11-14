@@ -4,7 +4,7 @@ using backend.Enums;
 
 namespace backend.Models
 {
-    [Table("MedicalRecord")]
+    [Table("Medical_Record")]
     public class MedicalRecord
     {
         [Key]

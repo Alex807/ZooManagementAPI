@@ -4,7 +4,7 @@ using backend.Enums;
 
 namespace backend.Models
 {
-    [Table("UserDetails")]
+    [Table("User_Details")]
     public class UserDetails
     {
         /// PK and FK to UserAccount

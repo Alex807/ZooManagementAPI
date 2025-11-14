@@ -3,7 +3,7 @@ using System.ComponentModel.DataAnnotations.Schema;
 
 namespace backend.Models
 {
-    [Table("UserRole")]
+    [Table("User_Role")]
     public class UserRole
     {
         //here we use composite PK (UserAccountId - RoleId)

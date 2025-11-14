@@ -5,7 +5,7 @@ namespace backend.Models
 {
     // tracks which staff members are responsible for which animals
 
-    [Table("StaffAnimalAssignment")]
+    [Table("Staff_Animal_Assignment")]
     public class StaffAnimalAssignment
     {
         [Required]
