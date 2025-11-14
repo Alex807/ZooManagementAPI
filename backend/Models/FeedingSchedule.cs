@@ -16,8 +16,7 @@ namespace backend.Models
         [Required]
         public int AnimalId { get; set; }
 
-        [Required]
-        public int StaffId { get; set; }
+        public int? StaffId { get; set; }
 
         [Required]
         [MaxLength(100)]
@@ -29,7 +28,7 @@ namespace backend.Models
 
         [Required]
         [Column(TypeName = "DateTime")] 
-        public DateTime? FeedingTime { get; set; }
+        public DateTime FeedingTime { get; set; }
 
         [Required]
         [Column(TypeName = "varchar(20)")]
@@ -39,15 +38,15 @@ namespace backend.Models
         public string? Notes { get; set; }
 
         [Column(TypeName = "date")] 
-        public DateTime CreatedAt { get; set; }
+        public DateTime? CreatedAt { get; set; }
 
         [Column(TypeName = "date")]
-        public DateTime UpdatedAt { get; set; }
+        public DateTime? UpdatedAt { get; set; }
 
         [ForeignKey("AnimalId")]
         public virtual Animal Animal { get; set; } = null!;
 
         [ForeignKey("StaffId")]
-        public virtual UserAccount Staff { get; set; } = null!;
+        public virtual Staff? Staff { get; set; } 
     }
 }

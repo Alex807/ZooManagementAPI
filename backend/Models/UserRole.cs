@@ -6,10 +6,7 @@ namespace backend.Models
     [Table("UserRole")]
     public class UserRole
     {
-        [Key]
-        [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
-        public int Id { get; set; }
-
+        //here we use composite PK (UserAccountId - RoleId)
         [Required]
         public int UserAccountId { get; set; }
 

@@ -33,6 +33,6 @@ namespace backend.Models
 
         public virtual ICollection<FeedingSchedule> FeedingSchedules { get; set; } = new List<FeedingSchedule>();
         public virtual ICollection<MedicalRecord> MedicalRecords { get; set; } = new List<MedicalRecord>();
-        public virtual ICollection<StaffAnimalAssignment> StaffAnimalAssignments { get; set; } = new List<StaffAnimalAssignment>();
+        public virtual ICollection<StaffAnimalAssignment> AnimalAssignments { get; set; } = new List<StaffAnimalAssignment>();
     }
 }

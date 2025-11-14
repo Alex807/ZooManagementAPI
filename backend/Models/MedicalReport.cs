@@ -14,12 +14,11 @@ namespace backend.Models
         [Required]
         public int AnimalId { get; set; }
 
-        [Required]
-        public int StaffId { get; set; }
+        public int? StaffId { get; set; }
 
         [Required]
         [Column(TypeName = "varchar(20)")]
-        public HealthStatus HealthStatus { get; set; }
+        public HealthStatus Status { get; set; }
 
         [Required]
         [Column(TypeName = "DateTime")] 
@@ -32,6 +31,6 @@ namespace backend.Models
         public virtual Animal Animal { get; set; } = null!;
 
         [ForeignKey("StaffId")]
-        public virtual UserAccount Staff { get; set; } = null!;
+        public virtual Staff? Staff { get; set; }
     }
 }

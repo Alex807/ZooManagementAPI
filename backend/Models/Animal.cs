@@ -17,7 +17,7 @@ namespace backend.Models
 
         [Required]
         [MaxLength(100)] 
-        public string Species {get; set; } = string.Empty; 
+        public string Specie {get; set; } = string.Empty; 
 
         [Required]
         [MaxLength(255)]
@@ -35,8 +35,7 @@ namespace backend.Models
         [Required] 
         public int CategoryId {get; set; } //FK 
 
-        [Required]
-        public int EnclosureId {get; set; } //FK 
+        public int? EnclosureId {get; set; } //FK can be null
 
         public DateTime? CreatedAt { get; set; }
         
@@ -46,7 +45,7 @@ namespace backend.Models
         public virtual Category Category { get; set; } = null!; 
 
         [ForeignKey("EnclosureId")]
-        public virtual Enclosure Enclosure { get; set; } = null!; 
+        public virtual Enclosure? Enclosure { get; set; }
 
         // Collection of feeding schedules for this animal
         public virtual ICollection<FeedingSchedule> FeedingSchedules { get; set; } = new List<FeedingSchedule>();

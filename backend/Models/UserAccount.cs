@@ -32,7 +32,8 @@ namespace backend.Models
 
         // One-to-one relationship with UserDetails and Staff
         public virtual UserDetails UserDetails { get; set; } = null!;
-        public virtual Staff Staff { get; set; } = null!; //(optional) an user account as ADMIN may not have a staff record
+
+        public virtual Staff? Staff { get; set; } //(optional) an user account as ADMIN may not have a staff record
 
         // Many-to-many relationship with roles through UserRole (additional roles)
         public virtual ICollection<UserRole> UserRoles { get; set; } = new List<UserRole>();
