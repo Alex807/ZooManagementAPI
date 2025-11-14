@@ -1,4 +1,4 @@
-namespace ZooManagementAPI.Enums
+namespace backend.Enums
 {
     // Represents the health status of an animal
     public enum HealthStatus

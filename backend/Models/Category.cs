@@ -1,7 +1,7 @@
 using System.ComponentModel.DataAnnotations; 
 using System.ComponentModel.DataAnnotations.Schema;
 
-namespace ZooManagementAPI.Models
+namespace backend.Models
 {
     // Represents a category/classification for animals (e.g., Mammals, Birds, Reptiles) 
 

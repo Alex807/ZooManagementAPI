@@ -1,8 +1,8 @@
 using System.ComponentModel.DataAnnotations; 
 using System.ComponentModel.DataAnnotations.Schema; 
-using ZooManagementAPI.Enums; 
+using backend.Enums; 
 
-namespace ZooManagementAPI.Models
+namespace backend.Models
 {
     [Table("Animal")] 
     public class Animal
@@ -55,6 +55,6 @@ namespace ZooManagementAPI.Models
         public virtual ICollection<MedicalRecord> MedicalRecords { get; set; } = new List<MedicalRecord>();
     
         // Collection of staff assignments for this animal 
-        public virtual ICollection<StuffAnimalAssignment> StaffAssignments { get; set; } = new List<StuffAnimalAssignment>();
+        public virtual ICollection<StaffAnimalAssignment> StaffAssignments { get; set; } = new List<StuffAnimalAssignment>();
     }
 }

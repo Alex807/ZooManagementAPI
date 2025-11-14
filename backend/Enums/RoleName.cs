@@ -1,4 +1,4 @@
-namespace ZooManagementAPI.Enums
+namespace backend.Enums
 {
     // Defines the different roles available in the system
     // Admin: Full system access

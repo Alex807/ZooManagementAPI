@@ -7,8 +7,8 @@
 Table Animal {
   id int [pk, increment]
   name varchar(100) [not null]
-  specie varchar(100)
-  image_url varchar(255) 
+  specie varchar(100) [not null]
+  image_url varchar(255) [not null]
   date_of_birth date
   gender enum [note: 'Male, Female']
   arrival_date date
@@ -37,16 +37,29 @@ Table UserAccount {
   username varchar(100) [unique, not null]
   email varchar(100) [unique, not null]
   password_hash varchar(255) [not null]
-  role_id int [not null] // e.g., main role 
+  current_role_id int [not null] // e.g., main role 
 }
 
 Table UserDetails {
   user_id int [pk, not null]
+  first_name varchar(100)
+  last_name varchar(100)
   birth_date date
-  gender enum [note: 'Male, Female']
+  gender enum [note: 'Male, Female'] 
+  phone varchar(15)
+  home_adress varchar(255)
   image_url varchar(255) 
   created_at datetime
   updated_at datetime
+}
+
+Table Staff { 
+  id int [pk, increment]
+  user_account_id int [not null, unique]
+  hire_date date [not null]
+  department varchar(100)
+  position varchar(100)
+  salary decimal(10,2)
 }
 
 Table Role {
@@ -68,10 +81,11 @@ Table UserRole {
 Table FeedingSchedule {
   id int [pk, increment]
   animal_id int [not null]
-  keeper_id int [not null] 
+  staff_id int [not null] 
   food_type varchar(100)
   quantity varchar(50)
   feeding_time datetime
+  status enum [note: 'Scheduled, Completed, Missed, Cancelled']
   notes text
   created_at datetime
   updated_at datetime
@@ -80,20 +94,20 @@ Table FeedingSchedule {
 Table MedicalRecord {
   id int [pk, increment]
   animal_id int [not null]
-  veterinarian_id int [not null] // user id with Veterinarian role
+  staff_id int [not null] // user id with Veterinarian role
   health_status enum [note: 'Healthy, Sick, Quarantined, Under_Treatment, Deceased']
   date datetime
   description text
 }
 
-Table StuffAnimalAssignment {
-  stuff_id int [not null]
+Table StaffAnimalAssignment {
+  staff_id int [not null]
   animal_id int [not null]
-  accidents varchar[200]
-  created_at datetime
+  observations varchar[200]
+  start_date datetime
 
   indexes {
-    (stuff_id, animal_id) [pk]
+    (staff_id, animal_id) [pk]
   }
 }
 
@@ -107,17 +121,18 @@ Ref: Enclosure.id < Animal.enclosure_id [delete: set null, update: cascade]
 
 // --- Feeding & Medical Relations ---
 Ref: Animal.id < FeedingSchedule.animal_id [delete: cascade, update: cascade]
-Ref: UserAccount.id < FeedingSchedule.keeper_id [delete: set null, update: cascade]
+Ref: Staff.id < FeedingSchedule.staff_id [delete: set null, update: cascade]
 
 Ref: Animal.id < MedicalRecord.animal_id [delete: cascade, update: cascade]
-Ref: UserAccount.id < MedicalRecord.veterinarian_id [delete: set null, update: cascade]
+Ref: Staff.id < MedicalRecord.staff_id [delete: set null, update: cascade]
 
 // --- User and Role System ---
 Ref: UserAccount.id - UserDetails.user_id [delete: cascade, update: cascade]
-Ref: Role.id < UserAccount.role_id [delete: set null, update: cascade]
+Ref: Role.id < UserAccount.current_role_id [delete: set null, update: cascade]
 Ref: UserAccount.id < UserRole.user_id [delete: cascade, update: cascade]
 Ref: Role.id < UserRole.role_id [delete: cascade, update: cascade]
+Ref: UserAccount.id < Staff.user_account_id [delete: cascade, update: cascade]
 
 // --- User to Animal Assignment ---
-Ref: UserAccount.id < StuffAnimalAssignment.stuff_id [delete: cascade, update: cascade]
-Ref: Animal.id < StuffAnimalAssignment.animal_id [delete: cascade, update: cascade]
+Ref: Staff.id < StaffAnimalAssignment.staff_id [delete: cascade, update: cascade]
+Ref: Animal.id < StaffAnimalAssignment.animal_id [delete: cascade, update: cascade]
