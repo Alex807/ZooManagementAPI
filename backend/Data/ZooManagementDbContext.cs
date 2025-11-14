@@ -51,7 +51,7 @@ namespace backend.Data
                     .OnDelete(DeleteBehavior.SetNull)
                     .IsRequired(false);
 
-                entity.HasIndex(e => new { e.Name, e.CategoryId })
+                entity.HasIndex(e => new { e.Name, e.Specie, e.CategoryId })
                         .IsUnique();
                 entity.HasIndex(e => e.EnclosureId);
 
@@ -80,13 +80,25 @@ namespace backend.Data
                 entity.HasOne(u => u.CurrentRole)
                     .WithMany(r => r.UserAccounts)
                     .HasForeignKey(u => u.CurrentRoleId)
-                    .OnDelete(DeleteBehavior.Cascade)
+                    .OnDelete(DeleteBehavior.Restrict) //blocks deletion if users are assigned to this role
                     .IsRequired();
 
                 entity.HasOne(u => u.UserDetails)
                     .WithOne(ud => ud.UserAccount)
                     .HasForeignKey<UserDetails>(ud => ud.UserId)
                     .OnDelete(DeleteBehavior.Cascade);
+            });
+
+            modelBuilder.Entity<Staff>(entity =>
+            {
+                entity.HasIndex(e => e.UserAccountId)
+                        .IsUnique();
+
+                entity.HasOne(s => s.UserAccount)
+                    .WithOne(u => u.Staff)
+                    .HasForeignKey<Staff>(s => s.UserAccountId)
+                    .OnDelete(DeleteBehavior.Cascade)
+                    .IsRequired();
             });
 
             modelBuilder.Entity<UserDetails>(entity =>
@@ -123,7 +135,7 @@ namespace backend.Data
                     .OnDelete(DeleteBehavior.Cascade)
                     .IsRequired();
 
-                // Relationship: FeedingSchedule -> Staff (Keeper) (Many-to-One, Required)
+                // Relationship: FeedingSchedule -> Staff (Keeper) (Many-to-One, Optional)
                 entity.HasOne(fs => fs.Staff)
                     .WithMany(u => u.FeedingSchedules)
                     .HasForeignKey(fs => fs.StaffId)
@@ -136,6 +148,7 @@ namespace backend.Data
 
                 entity.Property(e => e.Status)
                     .HasConversion<string>();
+
             });
 
             modelBuilder.Entity<MedicalRecord>(entity =>
@@ -147,7 +160,7 @@ namespace backend.Data
                     .OnDelete(DeleteBehavior.Cascade)
                     .IsRequired();
 
-                // Relationship: MedicalRecord -> Staff (Veterinarian) (Many-to-One, Required)
+                // Relationship: MedicalRecord -> Staff (Veterinarian) (Many-to-One, Optional)
                 entity.HasOne(mr => mr.Staff)
                     .WithMany(u => u.MedicalRecords)
                     .HasForeignKey(mr => mr.StaffId)

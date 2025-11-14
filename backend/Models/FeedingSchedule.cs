@@ -38,10 +38,10 @@ namespace backend.Models
         public string? Notes { get; set; }
 
         [Column(TypeName = "date")] 
-        public DateTime? CreatedAt { get; set; }
+        public DateOnly CreatedAt { get; set; }
 
         [Column(TypeName = "date")]
-        public DateTime? UpdatedAt { get; set; }
+        public DateOnly UpdatedAt { get; set; }
 
         [ForeignKey("AnimalId")]
         public virtual Animal Animal { get; set; } = null!;

@@ -23,7 +23,7 @@ namespace backend.Models
         [MaxLength(255)]
         public string PasswordHash { get; set; } = string.Empty;
 
-        // Current active role for this session
+        // Current active role for this session (at least is Visitor)
         [Required]
         public int CurrentRoleId { get; set; }
 
