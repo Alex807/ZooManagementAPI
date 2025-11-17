@@ -67,7 +67,7 @@ namespace backend.Controllers
 
             var role = new Role
             {
-                Name = dto.Name,
+                Name = dto.Name,  
                 Description = dto.Description ?? string.Empty
             };
 
