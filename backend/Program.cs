@@ -1,9 +1,13 @@
 using Microsoft.EntityFrameworkCore;
 using backend.Data;
 using System.Text.Json.Serialization; 
-using Scalar.AspNetCore;  
+using Scalar.AspNetCore; 
+using backend.Mappings; 
+using backend.Extensions;
 
 var builder = WebApplication.CreateBuilder(args);
+
+builder.Services.AddApplicationServices(); //custom extension method to add all application services in one place
 
 builder.Services.AddControllers()
     .AddJsonOptions(opts =>
@@ -13,6 +17,9 @@ builder.Services.AddControllers()
 // Add Swagger/OpenAPI generation for Scalar
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
+
+// Configure Mapster
+MappingConfig.Configure();
 
 // Add DbContext with MySQL
 builder.Services.AddDbContext<ZooManagementDbContext>(options =>
@@ -50,6 +57,8 @@ app.UseStaticFiles(); //to serve the static files (Scalar UI files in wwwroot fo
 app.UseHttpsRedirection();
 
 app.UseCors("AllowAll");  //in order to use CORS policy (comes with builder.Services.AddCors)
+
+app.UseAuthentication(); //used for future authentication/authorization
 
 app.UseAuthorization(); //used for future authentication/authorization
 
