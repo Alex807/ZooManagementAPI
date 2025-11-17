@@ -1,0 +1,138 @@
+// =============================
+// Zoo Management API Database Schema
+// Author: Burada Andrei Alexandru
+// Tech Stack: C#, .NET 9, MySQL
+// =============================
+
+Table Animal {
+  id int [pk, increment]
+  name varchar(100) [not null]
+  specie varchar(100) [not null]
+  image_url varchar(255) [not null]
+  date_of_birth date
+  gender enum [note: 'Male, Female']
+  arrival_date date
+  category_id int [not null]
+  enclosure_id int
+  created_at datetime
+  updated_at datetime
+}
+
+Table Category {
+  id int [pk, increment]
+  name varchar(100) [not null]
+  description text
+}
+
+Table Enclosure {
+  id int [pk, increment]
+  name varchar(100) [not null]
+  type varchar(100)
+  capacity int
+  location varchar(150)
+}
+
+Table UserAccount {
+  id int [pk, increment]
+  username varchar(100) [unique, not null]
+  email varchar(100) [unique, not null]
+  password_hash varchar(255) [not null]
+  current_role_id int [not null] // e.g., main role 
+}
+
+Table UserDetails {
+  user_id int [pk, not null]
+  first_name varchar(100)
+  last_name varchar(100)
+  birth_date date
+  gender enum [note: 'Male, Female'] 
+  phone varchar(15)
+  home_adress varchar(255)
+  image_url varchar(255) 
+  created_at datetime
+  updated_at datetime
+}
+
+Table Staff { 
+  id int [pk, increment]
+  user_account_id int [not null, unique]
+  hire_date date [not null]
+  department varchar(100)
+  position varchar(100)
+  salary decimal(10,2)
+}
+
+Table Role {
+  id int [pk, increment]
+  name enum [note: 'Admin, Zookeeper, Veterinarian, Visitor']
+  description text
+}
+
+Table UserRole {
+  user_id int [not null]
+  role_id int [not null]
+  assigned_at datetime
+
+  indexes {
+    (user_id, role_id) [unique]
+  }
+}
+
+Table FeedingSchedule {
+  id int [pk, increment]
+  animal_id int [not null]
+  staff_id int [not null] 
+  food_type varchar(100)
+  quantity varchar(50)
+  feeding_time datetime
+  status enum [note: 'Scheduled, Completed, Missed, Cancelled']
+  notes text
+  created_at datetime
+  updated_at datetime
+}
+
+Table MedicalRecord {
+  id int [pk, increment]
+  animal_id int [not null]
+  staff_id int [not null] // user id with Veterinarian role
+  health_status enum [note: 'Healthy, Sick, Quarantined, Under_Treatment, Deceased']
+  date datetime
+  description text
+}
+
+Table StaffAnimalAssignment {
+  staff_id int [not null]
+  animal_id int [not null]
+  observations varchar[200]
+  start_date datetime
+
+  indexes {
+    (staff_id, animal_id) [pk]
+  }
+}
+
+// ===================================================
+// RELATIONSHIPS
+// ===================================================
+
+// --- Core Animal Relations ---
+Ref: Category.id < Animal.category_id [delete: cascade, update: cascade]
+Ref: Enclosure.id < Animal.enclosure_id [delete: set null, update: cascade]
+
+// --- Feeding & Medical Relations ---
+Ref: Animal.id < FeedingSchedule.animal_id [delete: cascade, update: cascade]
+Ref: Staff.id < FeedingSchedule.staff_id [delete: set null, update: cascade]
+
+Ref: Animal.id < MedicalRecord.animal_id [delete: cascade, update: cascade]
+Ref: Staff.id < MedicalRecord.staff_id [delete: set null, update: cascade]
+
+// --- User and Role System ---
+Ref: UserAccount.id - UserDetails.user_id [delete: cascade, update: cascade]
+Ref: Role.id < UserAccount.current_role_id [delete: set null, update: cascade]
+Ref: UserAccount.id < UserRole.user_id [delete: cascade, update: cascade]
+Ref: Role.id < UserRole.role_id [delete: cascade, update: cascade]
+Ref: UserAccount.id < Staff.user_account_id [delete: cascade, update: cascade]
+
+// --- User to Animal Assignment ---
+Ref: Staff.id < StaffAnimalAssignment.staff_id [delete: cascade, update: cascade]
+Ref: Animal.id < StaffAnimalAssignment.animal_id [delete: cascade, update: cascade]
