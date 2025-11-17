@@ -15,7 +15,7 @@ namespace backend.Models
         public int AnimalId { get; set; }
 
         [MaxLength(200)]
-        public string Observations { get; set; } = string.Empty;
+        public string? Observations { get; set; } = string.Empty;
 
         [Column(TypeName = "datetime")]
         public DateTime CreatedAt { get; set; }

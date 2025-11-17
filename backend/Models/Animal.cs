@@ -12,15 +12,15 @@ namespace backend.Models
         public int Id {get; set; } 
 
         [Required] 
-        [MaxLength(100)]
+        [MaxLength(50)]
         public string Name {get; set; } = string.Empty;
 
         [Required]
-        [MaxLength(100)] 
+        [MaxLength(50)] 
         public string Specie {get; set; } = string.Empty; 
 
         [Required]
-        [MaxLength(255)]
+        [MaxLength(2048)] //increased length for image URL
         public string ImageUrl {get; set; } = string.Empty;
 
         [Column(TypeName = "date")] 
