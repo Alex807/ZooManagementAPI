@@ -1,0 +1,47 @@
+# Build artifacts
+bin/
+obj/
+out/
+Generated Files/
+
+# Visual Studio / VSCode
+.vscode/
+*.user
+*.suo
+*.userprefs
+
+# Build results
+*.dll
+*.exe
+*.pdb
+*.cache
+*.config
+*.log
+
+# Temporary files
+*.tmp
+*.temp
+*.log
+*.bak
+*.old
+
+# ASP.NET / API files
+appsettings.Development.json
+appsettings.Local.json
+
+# NuGet
+*.nupkg
+packages/
+
+# Resharper
+_ReSharper*/
+*.DotSettings.user
+
+# Rider
+.idea/
+
+# DotNet tool / coverage
+coverage/
+TestResults/
+*.coverage
+*.coveragexml
