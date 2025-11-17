@@ -37,11 +37,11 @@ namespace backend.Models
         [Column(TypeName = "text")]
         public string? Notes { get; set; }
 
-        [Column(TypeName = "date")] 
-        public DateOnly CreatedAt { get; set; }
-
-        [Column(TypeName = "date")]
-        public DateOnly UpdatedAt { get; set; }
+        [Column(TypeName = "datetime")]
+        public DateTime CreatedAt { get; set; }
+        
+        [Column(TypeName = "datetime")]
+        public DateTime UpdatedAt { get; set; }
 
         [ForeignKey("AnimalId")]
         public virtual Animal Animal { get; set; } = null!;

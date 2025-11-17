@@ -20,12 +20,14 @@ namespace backend.Models
         [Column(TypeName = "varchar(20)")]
         public HealthStatus Status { get; set; }
 
-        [Required]
-        [Column(TypeName = "DateTime")] 
-        public DateTime Date { get; set; }
-
         [Column(TypeName = "text")]
         public string? Description { get; set; }
+
+        [Column(TypeName = "datetime")]
+        public DateTime CreatedAt { get; set; }
+        
+        [Column(TypeName = "datetime")]
+        public DateTime UpdatedAt { get; set; }
 
         [ForeignKey("AnimalId")]
         public virtual Animal Animal { get; set; } = null!;

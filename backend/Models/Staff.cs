@@ -28,6 +28,12 @@ namespace backend.Models
         [Precision(10, 2)]
         public decimal Salary { get; set; }
 
+        [Column(TypeName = "datetime")]
+        public DateTime CreatedAt { get; set; }
+        
+        [Column(TypeName = "datetime")]
+        public DateTime UpdatedAt { get; set; }
+
         [ForeignKey("UserAccountId")]
         public virtual UserAccount UserAccount { get; set; } = null!;
 

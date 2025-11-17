@@ -22,6 +22,9 @@ Table Category {
   id int [pk, increment]
   name varchar(100) [not null]
   description text
+  image_url varchar(255) [not null]
+  created_at datetime 
+  updated_at datetime
 }
 
 Table Enclosure {
@@ -30,6 +33,8 @@ Table Enclosure {
   type varchar(100)
   capacity int
   location varchar(150)
+  created_at datetime
+  updated_at datetime
 }
 
 Table UserAccount {
@@ -37,7 +42,7 @@ Table UserAccount {
   username varchar(100) [unique, not null]
   email varchar(100) [unique, not null]
   password_hash varchar(255) [not null]
-  current_role_id int [not null] // e.g., main role 
+  current_role_id int [not null] // e.g., main role
 }
 
 Table UserDetails {
@@ -60,18 +65,22 @@ Table Staff {
   department varchar(100)
   position varchar(100)
   salary decimal(10,2)
+  created_at datetime
+  updated_at datetime
 }
 
 Table Role {
   id int [pk, increment]
   name enum [note: 'Admin, Zookeeper, Veterinarian, Visitor']
   description text
+  created_at datetime
+  updated_at datetime
 }
 
 Table UserRole {
   user_id int [not null]
   role_id int [not null]
-  assigned_at datetime
+  created_at datetime
 
   indexes {
     (user_id, role_id) [unique]
@@ -96,20 +105,22 @@ Table MedicalRecord {
   animal_id int [not null]
   staff_id int [not null] // user id with Veterinarian role
   health_status enum [note: 'Healthy, Sick, Quarantined, Under_Treatment, Deceased']
-  date datetime
   description text
+  created_at datetime
+  updated_at datetime
 }
 
 Table StaffAnimalAssignment {
   staff_id int [not null]
   animal_id int [not null]
   observations varchar[200]
-  start_date datetime
+  created_at datetime
+  updated_at datetime
 
   indexes {
     (staff_id, animal_id) [pk]
   }
-}
+}s
 
 // ===================================================
 // RELATIONSHIPS

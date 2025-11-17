@@ -15,10 +15,13 @@ namespace backend.Models
         public int AnimalId { get; set; }
 
         [MaxLength(200)]
-        public string Observations { get; set; } = string.Empty;
+        public string? Observations { get; set; } = string.Empty;
 
-        [Column(TypeName = "date")]
-        public DateTime? CreatedAt { get; set; }
+        [Column(TypeName = "datetime")]
+        public DateTime CreatedAt { get; set; }
+        
+        [Column(TypeName = "datetime")]
+        public DateTime UpdatedAt { get; set; }
 
         [ForeignKey("StaffId")]
         public virtual Staff Staff { get; set; } = null!;

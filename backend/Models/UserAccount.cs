@@ -11,16 +11,16 @@ namespace backend.Models
         public int Id { get; set; }
 
         [Required]
-        [MaxLength(100)] 
+        [MaxLength(50)] 
         public string Username { get; set; } = string.Empty;
 
         [Required]
-        [MaxLength(100)]
+        [MaxLength(50)]
         [EmailAddress]
         public string Email { get; set; } = string.Empty;
 
         [Required]
-        [MaxLength(255)]
+        [MaxLength(50)]
         public string PasswordHash { get; set; } = string.Empty;
 
         // Current active role for this session (at least is Visitor)
