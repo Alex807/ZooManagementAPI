@@ -21,13 +21,51 @@ namespace backend.Data
         public DbSet<MedicalRecord> MedicalRecords { get; set; }
         public DbSet<StaffAnimalAssignment> StaffAnimalAssignments { get; set; }
 
+        // override 'SaveChanges' and 'SaveChangesAsync' to automatically set CreatedAt and UpdatedAt
+        public override int SaveChanges()
+        {
+            var entries = ChangeTracker.Entries()
+                .Where(e => e.State == EntityState.Added || e.State == EntityState.Modified);
+
+            foreach (var entry in entries)
+            {
+                if (entry.State == EntityState.Added)
+                {
+                    entry.Property("CreatedAt").CurrentValue = DateTime.UtcNow;
+                }
+
+                entry.Property("UpdatedAt").CurrentValue = DateTime.UtcNow;
+            }
+
+            return base.SaveChanges();
+        }
+
+        // the async version is used more often in web applications
+        public override Task<int> SaveChangesAsync(CancellationToken cancellationToken = default)
+        {
+            var entries = ChangeTracker.Entries()
+                .Where(e => e.State == EntityState.Added || e.State == EntityState.Modified);
+
+            foreach (var entry in entries)
+            {
+                if (entry.State == EntityState.Added)
+                {
+                    entry.Property("CreatedAt").CurrentValue = DateTime.UtcNow;
+                }
+
+                entry.Property("UpdatedAt").CurrentValue = DateTime.UtcNow;
+            }
+
+            return base.SaveChangesAsync(cancellationToken);
+        }
+
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             base.OnModelCreating(modelBuilder);
 
             modelBuilder.Entity<Category>(entity =>
             {
-                entity.HasIndex(e => e.Name) 
+                entity.HasIndex(e => e.Name)
                     .IsUnique();
             });
 
@@ -172,7 +210,6 @@ namespace backend.Data
 
                 entity.HasIndex(e => e.AnimalId);
                 entity.HasIndex(e => e.StaffId);
-                entity.HasIndex(e => e.Date);
             });
 
             modelBuilder.Entity<StaffAnimalAssignment>(entity =>

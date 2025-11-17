@@ -122,3 +122,5 @@ E:\Github\ZooManagementAPI\backend\obj\Debug\net9.0\refint\backend.dll
 E:\Github\ZooManagementAPI\backend\obj\Debug\net9.0\backend.pdb
 E:\Github\ZooManagementAPI\backend\obj\Debug\net9.0\backend.genruntimeconfig.cache
 E:\Github\ZooManagementAPI\backend\obj\Debug\net9.0\ref\backend.dll
+E:\Github\ZooManagementAPI\backend\bin\Debug\net9.0\backend.staticwebassets.runtime.json
+E:\Github\ZooManagementAPI\backend\obj\Debug\net9.0\compressed\m5sv1styze-pdyzy27ctp.gz

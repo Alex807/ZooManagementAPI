@@ -37,9 +37,11 @@ namespace backend.Models
 
         public int? EnclosureId {get; set; } //FK can be null
 
-        public DateTime? CreatedAt { get; set; }
+        [Column(TypeName = "datetime")]
+        public DateTime CreatedAt { get; set; }
         
-        public DateTime? UpdatedAt { get; set; }
+        [Column(TypeName = "datetime")]
+        public DateTime UpdatedAt { get; set; }
 
         [ForeignKey("CategoryId")]
         public virtual Category Category { get; set; } = null!; 

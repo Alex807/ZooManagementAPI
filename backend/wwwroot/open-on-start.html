@@ -1,0 +1,29 @@
+<!doctype html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <title>Open on Start</title>
+  <script>
+    (function(){
+      try {
+        var scalarUrl = window.location.origin + '/scalar/v1';
+        var mainUrl = window.location.origin + '/test/main';
+        
+        // Open scalar endpoint in a new tab
+        window.open(scalarUrl, '_blank');
+        // Open main page in another new tab
+        window.open(mainUrl, '_blank');
+        
+      } catch(e) {
+        console.error('Error opening tabs:', e);
+      }
+    })();
+  </script>
+</head>
+<body>
+  <p>Opening application pages… If nothing happens, check the pop-up restrictions for your browser or
+     <a href="/test/main">API Home page</a>
+      <a href="/scalar/v1">Scalar UI</a> 
+    </p>
+</body>
+</html>

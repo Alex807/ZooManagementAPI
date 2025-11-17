@@ -45,6 +45,7 @@ using (var scope = app.Services.CreateScope())
     dbContext.Database.Migrate();
 }
 
+app.UseStaticFiles(); //to serve the static files (Scalar UI files in wwwroot folder)
 
 app.UseHttpsRedirection();
 

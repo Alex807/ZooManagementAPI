@@ -25,6 +25,12 @@ namespace backend.Models
         [MaxLength(150)]
         public string? Location { get; set; }
 
+        [Column(TypeName = "datetime")]
+        public DateTime CreatedAt { get; set; }
+        
+        [Column(TypeName = "datetime")]
+        public DateTime UpdatedAt { get; set; }
+
         //one enclosure can house many animals
         public virtual ICollection<Animal> Animals { get; set; } = new List<Animal>();
     }

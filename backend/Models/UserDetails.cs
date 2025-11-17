@@ -13,11 +13,11 @@ namespace backend.Models
         public int UserId { get; set; }
 
         [Required]
-        [MaxLength(100)]
+        [MaxLength(50)]
         public string FirstName { get; set; } = string.Empty;
 
         [Required]
-        [MaxLength(100)]
+        [MaxLength(50)]
         public string LastName { get; set; } = string.Empty;
 
         [Column(TypeName = "date")]
@@ -35,8 +35,10 @@ namespace backend.Models
         [MaxLength(255)]
         public string? ImageUrl { get; set; }
 
+        [Column(TypeName = "datetime")]
         public DateTime CreatedAt { get; set; }
-
+        
+        [Column(TypeName = "datetime")]
         public DateTime UpdatedAt { get; set; }
 
         public virtual UserAccount UserAccount { get; set; } = null!; 
