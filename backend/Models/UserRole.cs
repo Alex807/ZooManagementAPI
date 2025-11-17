@@ -3,22 +3,18 @@ using System.ComponentModel.DataAnnotations.Schema;
 
 namespace backend.Models
 {
-    [Table("UserRole")]
+    [Table("User_Role")]
     public class UserRole
     {
-        [Key]
-        [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
-        public int Id { get; set; }
-
+        //here we use composite PK (UserAccountId - RoleId)
         [Required]
         public int UserAccountId { get; set; }
 
         [Required]
         public int RoleId { get; set; }
 
-        [Required]
-        [Column(TypeName = "date")]
-        public DateTime AssignedAt { get; set; }
+        [Column(TypeName = "datetime")]
+        public DateTime CreatedAt { get; set; }
 
         [ForeignKey("UserAccountId")]
         public virtual UserAccount UserAccount { get; set; } = null!;

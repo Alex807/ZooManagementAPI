@@ -4,7 +4,7 @@ using backend.Enums;
 
 namespace backend.Models
 {
-    [Table("MedicalRecord")]
+    [Table("Medical_Record")]
     public class MedicalRecord
     {
         [Key]
@@ -14,24 +14,25 @@ namespace backend.Models
         [Required]
         public int AnimalId { get; set; }
 
-        [Required]
-        public int StaffId { get; set; }
+        public int? StaffId { get; set; }
 
         [Required]
         [Column(TypeName = "varchar(20)")]
-        public HealthStatus HealthStatus { get; set; }
-
-        [Required]
-        [Column(TypeName = "DateTime")] 
-        public DateTime Date { get; set; }
+        public HealthStatus Status { get; set; }
 
         [Column(TypeName = "text")]
         public string? Description { get; set; }
+
+        [Column(TypeName = "datetime")]
+        public DateTime CreatedAt { get; set; }
+        
+        [Column(TypeName = "datetime")]
+        public DateTime UpdatedAt { get; set; }
 
         [ForeignKey("AnimalId")]
         public virtual Animal Animal { get; set; } = null!;
 
         [ForeignKey("StaffId")]
-        public virtual UserAccount Staff { get; set; } = null!;
+        public virtual Staff? Staff { get; set; }
     }
 }

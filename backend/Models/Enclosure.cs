@@ -13,10 +13,10 @@ namespace backend.Models
         public int Id { get; set; }
 
         [Required]
-        [MaxLength(100)]
+        [MaxLength(50)]
         public string Name { get; set; } = string.Empty;
 
-        [MaxLength(100)]
+        [MaxLength(50)]
         public string? Type { get; set; }
 
         [Required]
@@ -24,6 +24,12 @@ namespace backend.Models
 
         [MaxLength(150)]
         public string? Location { get; set; }
+
+        [Column(TypeName = "datetime")]
+        public DateTime CreatedAt { get; set; }
+        
+        [Column(TypeName = "datetime")]
+        public DateTime UpdatedAt { get; set; }
 
         //one enclosure can house many animals
         public virtual ICollection<Animal> Animals { get; set; } = new List<Animal>();

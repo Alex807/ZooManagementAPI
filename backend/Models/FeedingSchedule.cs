@@ -6,7 +6,7 @@ using backend.Enums;
 namespace backend.Models
 {
     //feeding schedule for an animal. (tracks what, when, and how much an animal is fed)
-    [Table("FeedingSchedule")]
+    [Table("Feeding_Schedule")]
     public class FeedingSchedule
     {
         [Key]
@@ -16,8 +16,7 @@ namespace backend.Models
         [Required]
         public int AnimalId { get; set; }
 
-        [Required]
-        public int StaffId { get; set; }
+        public int? StaffId { get; set; }
 
         [Required]
         [MaxLength(100)]
@@ -29,7 +28,7 @@ namespace backend.Models
 
         [Required]
         [Column(TypeName = "DateTime")] 
-        public DateTime? FeedingTime { get; set; }
+        public DateTime FeedingTime { get; set; }
 
         [Required]
         [Column(TypeName = "varchar(20)")]
@@ -38,16 +37,16 @@ namespace backend.Models
         [Column(TypeName = "text")]
         public string? Notes { get; set; }
 
-        [Column(TypeName = "date")] 
+        [Column(TypeName = "datetime")]
         public DateTime CreatedAt { get; set; }
-
-        [Column(TypeName = "date")]
+        
+        [Column(TypeName = "datetime")]
         public DateTime UpdatedAt { get; set; }
 
         [ForeignKey("AnimalId")]
         public virtual Animal Animal { get; set; } = null!;
 
         [ForeignKey("StaffId")]
-        public virtual UserAccount Staff { get; set; } = null!;
+        public virtual Staff? Staff { get; set; } 
     }
 }

@@ -1,41 +1,68 @@
+using Microsoft.EntityFrameworkCore;
+using backend.Data;
+using System.Text.Json.Serialization; 
+using Scalar.AspNetCore;  
+
 var builder = WebApplication.CreateBuilder(args);
 
-// Add services to the container.
-// Learn more about configuring OpenAPI at https://aka.ms/aspnet/openapi
-builder.Services.AddOpenApi();
+builder.Services.AddControllers()
+    .AddJsonOptions(opts =>
+        opts.JsonSerializerOptions.Converters.Add(new JsonStringEnumConverter())
+);  //to serialize enums as strings in JSON responses in ZooManagementDbContext
+
+// Add Swagger/OpenAPI generation for Scalar
+builder.Services.AddEndpointsApiExplorer();
+builder.Services.AddSwaggerGen();
+
+// Add DbContext with MySQL
+builder.Services.AddDbContext<ZooManagementDbContext>(options =>
+    options.UseMySql(
+        builder.Configuration.GetConnectionString("DefaultConnection"),
+        ServerVersion.AutoDetect(builder.Configuration.GetConnectionString("DefaultConnection"))  //takes care of mySQL server version automatically
+    )
+);
+
+builder.Services.AddCors(options =>
+{
+    options.AddPolicy("AllowAll", policy =>
+        policy.AllowAnyOrigin()
+              .AllowAnyMethod()
+              .AllowAnyHeader()
+    );
+});
 
 var app = builder.Build();
 
-// Configure the HTTP request pipeline.
 if (app.Environment.IsDevelopment())
 {
-    app.MapOpenApi();
+    app.UseDeveloperExceptionPage(); //print detailed error (stack trace) for development
 }
+
+// Automatically create or update the database on startup
+using (var scope = app.Services.CreateScope())
+{
+    var dbContext = scope.ServiceProvider.GetRequiredService<ZooManagementDbContext>();
+    dbContext.Database.Migrate();
+}
+
+app.UseStaticFiles(); //to serve the static files (Scalar UI files in wwwroot folder)
 
 app.UseHttpsRedirection();
 
-var summaries = new[]
-{
-    "Freezing", "Bracing", "Chilly", "Cool", "Mild", "Warm", "Balmy", "Hot", "Sweltering", "Scorching"
-};
+app.UseCors("AllowAll");  //in order to use CORS policy (comes with builder.Services.AddCors)
 
-app.MapGet("/weatherforecast", () =>
-{
-    var forecast =  Enumerable.Range(1, 5).Select(index =>
-        new WeatherForecast
-        (
-            DateOnly.FromDateTime(DateTime.Now.AddDays(index)),
-            Random.Shared.Next(-20, 55),
-            summaries[Random.Shared.Next(summaries.Length)]
-        ))
-        .ToArray();
-    return forecast;
-})
-.WithName("GetWeatherForecast");
+app.UseAuthorization(); //used for future authentication/authorization
 
-app.Run();
+// json endpoint (../swagger/v1/swagger.json)
+app.UseSwagger(); //needed for Swagger JSON endpoint that is readed by Scalar UI
 
-record WeatherForecast(DateOnly Date, int TemperatureC, string? Summary)
+// Scalar UI documentation
+app.MapScalarApiReference(options =>
 {
-    public int TemperatureF => 32 + (int)(TemperatureC / 0.5556);
-}
+    options.Theme = ScalarTheme.Mars; 
+    options.WithOpenApiRoutePattern("/swagger/{documentName}/swagger.json");  //needed to point to the correct swagger json endpoint
+});
+
+app.MapControllers();
+
+app.Run(); //CTRL + F5(for ScalarUI pop-up)

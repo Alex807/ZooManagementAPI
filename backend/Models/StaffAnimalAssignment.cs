@@ -5,13 +5,9 @@ namespace backend.Models
 {
     // tracks which staff members are responsible for which animals
 
-    [Table("StaffAnimalAssignment")]
+    [Table("Staff_Animal_Assignment")]
     public class StaffAnimalAssignment
     {
-        [Key]
-        [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
-        public int Id { get; set; }
-
         [Required]
         public int StaffId { get; set; }
 
@@ -19,13 +15,16 @@ namespace backend.Models
         public int AnimalId { get; set; }
 
         [MaxLength(200)]
-        public string Observations { get; set; } = string.Empty;
+        public string? Observations { get; set; } = string.Empty;
 
-        [Column(TypeName = "date")]
-        public DateTime? CreatedAt { get; set; }
+        [Column(TypeName = "datetime")]
+        public DateTime CreatedAt { get; set; }
+        
+        [Column(TypeName = "datetime")]
+        public DateTime UpdatedAt { get; set; }
 
         [ForeignKey("StaffId")]
-        public virtual UserAccount Staff { get; set; } = null!;
+        public virtual Staff Staff { get; set; } = null!;
 
         [ForeignKey("AnimalId")]
         public virtual Animal Animal { get; set; } = null!;
