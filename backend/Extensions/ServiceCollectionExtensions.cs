@@ -2,6 +2,7 @@ using backend.Services.Animals;
 using backend.Services.Categories;
 using backend.Services.Enclosures;
 using backend.Services.Staff;
+using backend.Services.MedicalRecords;
 
 namespace backend.Extensions;
 
@@ -13,6 +14,7 @@ public static class ServiceCollectionExtensions
         services.AddScoped<ICategoryService, CategoryService>();
         services.AddScoped<IEnclosureService, EnclosureService>(); 
         services.AddScoped<IStaffService, StaffService>();
+        services.AddScoped<IMedicalRecordService, MedicalRecordService>();
         // add more here...
 
         return services;
