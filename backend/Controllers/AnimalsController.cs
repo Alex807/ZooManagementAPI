@@ -6,7 +6,7 @@ using backend.Enums;
 namespace backend.Controllers;
 
 [ApiController]
-[Route("api/[controller]")]
+[Route("api/[controller]")] 
 public class AnimalsController : ControllerBase
 {
     private readonly IAnimalService _animalService;

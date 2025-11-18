@@ -7,7 +7,7 @@ namespace backend.Controllers
 {
     [ApiController]
     [Route("api/user-details")]
-    [Authorize] 
+    [Authorize]  
     public class UserDetailsController : ControllerBase
     {
         private readonly IUserDetailsService _userDetailsService;

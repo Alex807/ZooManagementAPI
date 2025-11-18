@@ -5,7 +5,7 @@ using backend.Services.Categories;
 namespace backend.Controllers;
 
 [ApiController]
-[Route("api/[controller]")]
+[Route("api/[controller]")] 
 public class CategoriesController : ControllerBase
 {
     private readonly ICategoryService _categoryService;
