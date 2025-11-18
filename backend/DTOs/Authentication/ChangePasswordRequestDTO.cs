@@ -1,6 +1,6 @@
 using System.ComponentModel.DataAnnotations;
 
-namespace backend.DTOs.Authemtication;
+namespace backend.DTOs.Authentication;
 
 public class ChangePasswordRequestDto
 {

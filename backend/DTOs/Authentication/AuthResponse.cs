@@ -1,6 +1,6 @@
 using backend.DTOs.User;
 
-namespace backend.DTOs.Authemtication;
+namespace backend.DTOs.Authentication;
 
 // DTO for authentication response containing JWT token and user information
 public class AuthResponseDto
