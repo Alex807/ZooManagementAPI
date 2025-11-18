@@ -12,8 +12,8 @@
 **Database:** MySQL 8  
 **ORM:** Entity Framework Core  
 **Auth:** JWT + Role-based Access Control (RBAC)  
-**Tooling:** Scalar, Postman, ImgBB, Mapster 
-**DbCaching** Delta (https://github.com/SimonCropp/Delta?tab=readme-ov-file)
+**Tooling:** Scalar, Postman, ImgBB, Mapster <br>
+**DbCaching:** Delta (https://github.com/SimonCropp/Delta?tab=readme-ov-file)
 
 ---
 
