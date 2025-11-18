@@ -27,14 +27,17 @@ namespace backend.Data
             var entries = ChangeTracker.Entries()
                 .Where(e => e.State == EntityState.Added || e.State == EntityState.Modified);
 
+            var bucharest = TimeZoneInfo.FindSystemTimeZoneById("E. Europe Standard Time");
+            var bucharestNow = TimeZoneInfo.ConvertTimeFromUtc(DateTime.UtcNow, bucharest);
+
             foreach (var entry in entries)
             {
                 if (entry.State == EntityState.Added)
                 {
-                    entry.Property("CreatedAt").CurrentValue = DateTime.UtcNow;
+                    entry.Property("CreatedAt").CurrentValue = bucharestNow;
                 }
 
-                entry.Property("UpdatedAt").CurrentValue = DateTime.UtcNow;
+                entry.Property("UpdatedAt").CurrentValue = bucharestNow;
             }
 
             return base.SaveChanges();
@@ -46,14 +49,17 @@ namespace backend.Data
             var entries = ChangeTracker.Entries()
                 .Where(e => e.State == EntityState.Added || e.State == EntityState.Modified);
 
+            var bucharest = TimeZoneInfo.FindSystemTimeZoneById("E. Europe Standard Time");
+            var bucharestNow = TimeZoneInfo.ConvertTimeFromUtc(DateTime.UtcNow, bucharest);
+            
             foreach (var entry in entries)
             {
                 if (entry.State == EntityState.Added)
                 {
-                    entry.Property("CreatedAt").CurrentValue = DateTime.UtcNow;
+                    entry.Property("CreatedAt").CurrentValue = bucharestNow;
                 }
 
-                entry.Property("UpdatedAt").CurrentValue = DateTime.UtcNow;
+                entry.Property("UpdatedAt").CurrentValue = bucharestNow;
             }
 
             return base.SaveChangesAsync(cancellationToken);

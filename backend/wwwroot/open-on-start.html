@@ -3,27 +3,92 @@
 <head>
   <meta charset="utf-8">
   <title>Open on Start</title>
+
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      padding: 30px;
+      background: #f7f7f7;
+      color: #333;
+    }
+
+    h1 {
+      margin-bottom: 15px;
+    }
+
+    .container {
+      background: #fff;
+      padding: 20px;
+      border-radius: 8px;
+      box-shadow: 0 2px 6px rgba(0,0,0,0.15);
+      max-width: 400px;
+    }
+
+    button {
+      width: 100%;
+      padding: 12px;
+      margin: 10px 0;
+      font-size: 16px;
+      border: none;
+      border-radius: 6px;
+      cursor: pointer;
+    }
+
+    .btn-main {
+      background-color: #007bff;
+      color: white;
+    }
+
+    .btn-scalar {
+      background-color: #28a745;
+      color: white;
+    }
+
+    .note {
+      font-size: 14px;
+      margin-top: 15px;
+      color: #666;
+    }
+  </style>
+
+  <!-- Auto-open tabs when the page loads -->
   <script>
     (function(){
       try {
-        var scalarUrl = window.location.origin + '/scalar/v1';
-        var mainUrl = window.location.origin + '/test/main';
-        
-        // Open scalar endpoint in a new tab
+        let scalarUrl = window.location.origin + '/scalar/v1';
+        let mainUrl   = window.location.origin + '/test/main';
+
         window.open(scalarUrl, '_blank');
-        // Open main page in another new tab
         window.open(mainUrl, '_blank');
-        
       } catch(e) {
         console.error('Error opening tabs:', e);
       }
     })();
   </script>
+
+  <!-- Buttons logic -->
+  <script>
+    function openMain() {
+      window.open(window.location.origin + '/test/main', '_blank');
+    }
+
+    function openScalar() {
+      window.open(window.location.origin + '/scalar/v1', '_blank');
+    }
+  </script>
 </head>
+
 <body>
-  <p>Opening application pages… If nothing happens, check the pop-up restrictions for your browser or
-     <a href="/test/main">API Home page</a>
-      <a href="/scalar/v1">Scalar UI</a> 
+  <div class="container">
+    <h1>Open Application Pages</h1>
+
+    <button class="btn-main" onclick="openMain()">Open API Home Page</button>
+    <button class="btn-scalar" onclick="openScalar()">Open Scalar UI</button>
+
+    <p class="note">
+      If tabs did not open automatically, use the buttons above.  
+      Your browser may be blocking pop-ups.
     </p>
+  </div>
 </body>
 </html>
