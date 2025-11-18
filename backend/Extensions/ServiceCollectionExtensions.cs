@@ -5,6 +5,7 @@ using backend.Services.Staff;
 using backend.Services.MedicalRecords;
 using backend.Services.FeedingSchedules;
 using backend.Services.Assignments;
+using backend.Services.Authentication;
 
 namespace backend.Extensions;
 
@@ -19,6 +20,10 @@ public static class ServiceCollectionExtensions
         services.AddScoped<IMedicalRecordService, MedicalRecordService>();
         services.AddScoped<IFeedingScheduleService, FeedingScheduleService>();
         services.AddScoped<IStaffAnimalAssignmentService, StaffAnimalAssignmentService>();
+        
+        services.AddScoped<IAuthService, AuthService>();
+        services.AddScoped<IUserDetailsService, UserDetailsService>();
+        services.AddScoped<IUserService, UserService>();
         // add more here...
 
         return services;

@@ -34,7 +34,7 @@ namespace backend.Models
 
         [MaxLength(2048)] //increased length for image URL
         public string? ImageUrl { get; set; }
-
+ 
         [Column(TypeName = "datetime")]
         public DateTime CreatedAt { get; set; }
         

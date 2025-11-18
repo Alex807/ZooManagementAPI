@@ -16,11 +16,12 @@ public class UpdateUserDetailsRequestDto
     public Gender? Gender { get; set; }
 
     [Phone(ErrorMessage = "Invalid phone number format")]
-    [StringLength(15, ErrorMessage = "Phone number cannot exceed 15 characters")]
+    [StringLength(10, ErrorMessage = "Phone number cannot exceed 10 characters")] 
+    [RegularExpression(@"^\d{10}$", ErrorMessage = "Phone number must contain exactly 10 digits")]
     public string? Phone { get; set; }
 
     [StringLength(255, ErrorMessage = "Home address cannot exceed 255 characters")]
-    public string? HomeAddress { get; set; }
+    public string? HomeAddress { get; set; } 
 
     [Url(ErrorMessage = "Invalid URL format")]
     [StringLength(2048, ErrorMessage = "Image URL cannot exceed 2048 characters")]

@@ -4,10 +4,51 @@ using System.Text.Json.Serialization;
 using Scalar.AspNetCore; 
 using backend.Mappings; 
 using backend.Extensions;
+using System.Text;
+using Microsoft.IdentityModel.Tokens;
+using Microsoft.AspNetCore.Authentication.JwtBearer;
+using System; //for the env variable where JWT key is stored
 
 var builder = WebApplication.CreateBuilder(args);
 
 builder.Services.AddApplicationServices(); //custom extension method to add all application services in one place
+
+// Configure Mapster
+MappingConfig.Configure();
+
+// Configure JWT Authentication
+builder.Services.AddAuthentication(options =>
+{
+    options.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme;
+    options.DefaultChallengeScheme = JwtBearerDefaults.AuthenticationScheme; 
+    options.DefaultScheme = JwtBearerDefaults.AuthenticationScheme;
+})
+.AddJwtBearer(options =>
+{
+    //fails fast if the env var is missing
+    var key = Environment.GetEnvironmentVariable("Jwt__Key") 
+              ?? throw new InvalidOperationException("Jwt__Key environment variable is not set.");
+
+    options.TokenValidationParameters = new TokenValidationParameters
+    {
+        ValidateIssuer = true,
+        ValidateAudience = true,
+        ValidateLifetime = true,
+        ValidateIssuerSigningKey = true,
+        ValidIssuer = builder.Configuration["Jwt:Issuer"],
+        ValidAudience = builder.Configuration["Jwt:Audience"],
+        IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(key))
+    };
+});
+
+// Configure Authorization Policies
+builder.Services.AddAuthorizationBuilder()
+                                .AddPolicy("AdminOnly", policy => policy.RequireRole("Admin"))
+                                .AddPolicy("ZookeeperOrAbove", policy => policy.RequireRole("Admin", "Zookeeper"))
+                                .AddPolicy("VeterinarianOrAbove", policy => policy.RequireRole("Admin", "Veterinarian"))
+                                .AddPolicy("Visitor", policy => policy.RequireRole("Visitor")) 
+                                .AddPolicy("AuthenticatedUsers", policy => policy.RequireAuthenticatedUser());
+
 
 builder.Services.AddControllers()
     .AddJsonOptions(opts =>
@@ -17,9 +58,6 @@ builder.Services.AddControllers()
 // Add Swagger/OpenAPI generation for Scalar
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
-
-// Configure Mapster
-MappingConfig.Configure();
 
 // Add DbContext with MySQL
 builder.Services.AddDbContext<ZooManagementDbContext>(options =>
@@ -52,18 +90,18 @@ using (var scope = app.Services.CreateScope())
     dbContext.Database.Migrate();
 }
 
+app.UseHttpsRedirection();
+
 app.UseStaticFiles(); //to serve the static files (Scalar UI files in wwwroot folder)
 
-app.UseHttpsRedirection();
+// json endpoint (../swagger/v1/swagger.json)
+app.UseSwagger(); //needed for Swagger JSON endpoint that is readed by Scalar UI
 
 app.UseCors("AllowAll");  //in order to use CORS policy (comes with builder.Services.AddCors)
 
 app.UseAuthentication(); //used for future authentication/authorization
 
 app.UseAuthorization(); //used for future authentication/authorization
-
-// json endpoint (../swagger/v1/swagger.json)
-app.UseSwagger(); //needed for Swagger JSON endpoint that is readed by Scalar UI
 
 // Scalar UI documentation
 app.MapScalarApiReference(options =>
