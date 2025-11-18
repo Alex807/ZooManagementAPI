@@ -12,7 +12,7 @@
 **Database:** MySQL 8  
 **ORM:** Entity Framework Core  
 **Auth:** JWT + Role-based Access Control (RBAC)  
-**Tooling:** Swagger, Postman, Docker (optional)
+**Tooling:** Scalar, Postman, ImgBB, Delta, Mapster
 
 ---
 
