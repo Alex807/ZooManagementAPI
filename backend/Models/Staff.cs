@@ -20,7 +20,7 @@ namespace backend.Models
 
         [MaxLength(100)]
         public string Department { get; set; } = string.Empty;
-
+ 
         [MaxLength(100)]
         public string Position { get; set; } = string.Empty;
 

@@ -58,8 +58,13 @@ public class AuthService : IAuthService
         var userDetails = new UserDetails
         {
             UserId = userAccount.Id,
-            FirstName = string.Empty,
-            LastName = string.Empty
+            FirstName = request.FirstName,
+            LastName = request.LastName, 
+            BirthDate = request.BirthDate,
+            Gender = request.Gender,
+            Phone = request.Phone,
+            HomeAddress = request.HomeAddress,
+            ImageUrl = request.ImageUrl
         };
 
         _context.UserDetails.Add(userDetails);

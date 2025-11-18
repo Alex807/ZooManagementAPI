@@ -110,7 +110,7 @@ namespace backend.Controllers
         {
             await _userService.RemoveRoleFromUserAsync(userId, roleId);
             return NoContent();
-        }
+        } 
 
         [HttpPut("{userId}/change-role")]
         [Authorize(Policy = "AdminOnly")]

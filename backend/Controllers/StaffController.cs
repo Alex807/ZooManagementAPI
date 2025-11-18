@@ -49,7 +49,7 @@ public class StaffController : ControllerBase
         }
     }
 
-    [HttpPut("{id}")]
+    [HttpPut("{id}")] 
     public async Task<ActionResult<StaffResponseDto>> UpdateStaff(int id, [FromBody] UpdateStaffRequestDto request)
     {
         if (!ModelState.IsValid)
