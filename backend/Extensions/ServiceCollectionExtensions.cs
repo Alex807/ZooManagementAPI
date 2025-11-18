@@ -3,6 +3,7 @@ using backend.Services.Categories;
 using backend.Services.Enclosures;
 using backend.Services.Staff;
 using backend.Services.MedicalRecords;
+using backend.Services.FeedingSchedules;
 
 namespace backend.Extensions;
 
@@ -15,6 +16,7 @@ public static class ServiceCollectionExtensions
         services.AddScoped<IEnclosureService, EnclosureService>(); 
         services.AddScoped<IStaffService, StaffService>();
         services.AddScoped<IMedicalRecordService, MedicalRecordService>();
+        services.AddScoped<IFeedingScheduleService, FeedingScheduleService>();
         // add more here...
 
         return services;
