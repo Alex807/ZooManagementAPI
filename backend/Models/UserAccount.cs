@@ -20,7 +20,7 @@ namespace backend.Models
         public string Email { get; set; } = string.Empty;
 
         [Required]
-        [MaxLength(50)]
+        [MaxLength(255)] // BCrypt hashes are 60 chars minimum, but allowing extra space for future hash algorithms
         public string PasswordHash { get; set; } = string.Empty;
 
         // Current active role for this session (at least is Visitor)

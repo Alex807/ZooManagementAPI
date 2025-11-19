@@ -5,6 +5,8 @@ using backend.Services.ImageUpload;
 
 namespace backend.Controllers;
 
+// Image upload controller supporting both multipart/form-data and Base64 JSON formats
+// Note: Multipart endpoints are excluded from Swagger due to IFormFile serialization limitations.
 [ApiController]
 [Route("api/[controller]")]
 [Authorize] // Require authentication for all endpoints
@@ -21,6 +23,7 @@ public class ImageUploadController : ControllerBase
 
     [HttpPost("upload")]
     [Consumes("multipart/form-data")]
+    [ApiExplorerSettings(IgnoreApi = true)] // excluded from Swagger documentation (conflicts with OpenAPI typespec)
     public async Task<ActionResult<ImageUploadResponseDto>> UploadImage([FromForm] IFormFile imageFile)
     {
         try
@@ -106,6 +109,7 @@ public class ImageUploadController : ControllerBase
     // returns: a list of ImageUploadResponseDto with ImgBB URLs
     [HttpPost("upload-multiple")]
     [Consumes("multipart/form-data")]
+    [ApiExplorerSettings(IgnoreApi = true)] // excluded from Swagger documentation (conflicts with OpenAPI typespec)
     public async Task<ActionResult<List<ImageUploadResponseDto>>> UploadMultipleImages([FromForm] List<IFormFile> imageFiles)
     {
         try
@@ -169,6 +173,7 @@ public class ImageUploadController : ControllerBase
     /// Validate an image file without uploading
     [HttpPost("validate")]
     [Consumes("multipart/form-data")]
+    [ApiExplorerSettings(IgnoreApi = true)] // excluded from Swagger documentation (conflicts with OpenAPI typespec)
     public ActionResult<object> ValidateImage([FromForm] IFormFile imageFile)
     {
         if (imageFile == null || imageFile.Length == 0)

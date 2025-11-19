@@ -75,6 +75,8 @@ builder.Services.AddCors(options =>
     );
 });
 
+builder.Services.AddHealthChecks(); //to check if the database connection is healthy
+
 var app = builder.Build();
 
 if (app.Environment.IsDevelopment())
@@ -110,5 +112,7 @@ app.MapScalarApiReference(options =>
 });
 
 app.MapControllers();
+
+app.MapHealthChecks("/health"); //see if the API is running
 
 app.Run(); //CTRL + F5(for ScalarUI pop-up)
