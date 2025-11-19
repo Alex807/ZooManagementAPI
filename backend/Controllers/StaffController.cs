@@ -1,4 +1,5 @@
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Authorization;
 using backend.DTOs.Staff;
 using backend.Services.Staff;
 
@@ -6,6 +7,7 @@ namespace backend.Controllers;
 
 [ApiController]
 [Route("api/[controller]")]
+[Authorize(Policy = "AdminOnly")]
 public class StaffController : ControllerBase
 {
     private readonly IStaffService _staffService;
@@ -49,7 +51,7 @@ public class StaffController : ControllerBase
         }
     }
 
-    [HttpPut("{id}")] 
+    [HttpPut("{id}")]
     public async Task<ActionResult<StaffResponseDto>> UpdateStaff(int id, [FromBody] UpdateStaffRequestDto request)
     {
         if (!ModelState.IsValid)

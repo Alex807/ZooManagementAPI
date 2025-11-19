@@ -10,4 +10,4 @@ public interface IUserDetailsService
     Task<UserDetailsDto> GetUserDetailsByPhoneAsync(string phone);
     Task<UserDetailsDto> UpdateUserDetailsAsync(int userId, UpdateUserDetailsRequestDto request);
     Task DeleteUserDetailsAsync(int userId);
-}
+} 

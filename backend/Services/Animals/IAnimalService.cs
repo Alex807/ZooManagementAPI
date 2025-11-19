@@ -2,7 +2,7 @@ using backend.DTOs.Animal;
 using backend.Enums;
 
 namespace backend.Services.Animals;
-
+ 
 public interface IAnimalService
 {
     Task<IEnumerable<AnimalResponseDto>> GetAllAnimalsAsync(AnimalQueryDto query);

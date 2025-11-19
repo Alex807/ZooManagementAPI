@@ -1,4 +1,5 @@
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Authorization;
 using backend.DTOs.MedicalRecord;
 using backend.Services.MedicalRecords;
 using backend.Enums;
@@ -7,6 +8,7 @@ namespace backend.Controllers;
 
 [ApiController]
 [Route("api/[controller]")]
+[Authorize(Policy = "StaffOrAbove")]
 public class MedicalRecordsController : ControllerBase
 {
     private readonly IMedicalRecordService _medicalRecordService;
@@ -34,6 +36,7 @@ public class MedicalRecordsController : ControllerBase
     }
 
     [HttpPost]
+    [Authorize(Policy = "VeterinarianOrAbove")]
     public async Task<ActionResult<MedicalRecordResponseDto>> CreateMedicalRecord([FromBody] CreateMedicalRecordRequestDto request)
     {
         if (!ModelState.IsValid)
@@ -51,6 +54,7 @@ public class MedicalRecordsController : ControllerBase
     }
 
     [HttpPut("{id}")]
+    [Authorize(Policy = "VeterinarianOrAbove")]
     public async Task<ActionResult<MedicalRecordResponseDto>> UpdateMedicalRecord(int id, [FromBody] UpdateMedicalRecordRequestDto request)
     {
         if (!ModelState.IsValid)
@@ -64,6 +68,7 @@ public class MedicalRecordsController : ControllerBase
     }
 
     [HttpDelete("{id}")]
+    [Authorize(Policy = "AdminOnly")]
     public async Task<IActionResult> DeleteMedicalRecord(int id)
     {
         var deleted = await _medicalRecordService.DeleteMedicalRecordAsync(id);

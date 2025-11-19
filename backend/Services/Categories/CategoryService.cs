@@ -9,7 +9,7 @@ namespace backend.Services.Categories;
 public class CategoryService : ICategoryService
 {
     private readonly ZooManagementDbContext _context;
-
+ 
     public CategoryService(ZooManagementDbContext context)
     {
         _context = context;

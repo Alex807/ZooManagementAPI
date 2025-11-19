@@ -1,8 +1,8 @@
 using Microsoft.EntityFrameworkCore;
 using backend.Data;
-using System.Text.Json.Serialization; 
-using Scalar.AspNetCore; 
-using backend.Mappings; 
+using System.Text.Json.Serialization;
+using Scalar.AspNetCore;
+using backend.Mappings;
 using backend.Extensions;
 using System.Text;
 using Microsoft.IdentityModel.Tokens;
@@ -20,13 +20,13 @@ MappingConfig.Configure();
 builder.Services.AddAuthentication(options =>
 {
     options.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme;
-    options.DefaultChallengeScheme = JwtBearerDefaults.AuthenticationScheme; 
+    options.DefaultChallengeScheme = JwtBearerDefaults.AuthenticationScheme;
     options.DefaultScheme = JwtBearerDefaults.AuthenticationScheme;
 })
 .AddJwtBearer(options =>
 {
     //fails fast if the env var is missing
-    var key = Environment.GetEnvironmentVariable("Jwt__Key") 
+    var key = Environment.GetEnvironmentVariable("Jwt__Key")
               ?? throw new InvalidOperationException("Jwt__Key environment variable is not set.");
 
     options.TokenValidationParameters = new TokenValidationParameters
@@ -46,9 +46,8 @@ builder.Services.AddAuthorizationBuilder()
                                 .AddPolicy("AdminOnly", policy => policy.RequireRole("Admin"))
                                 .AddPolicy("ZookeeperOrAbove", policy => policy.RequireRole("Admin", "Zookeeper"))
                                 .AddPolicy("VeterinarianOrAbove", policy => policy.RequireRole("Admin", "Veterinarian"))
-                                .AddPolicy("Visitor", policy => policy.RequireRole("Visitor")) 
-                                .AddPolicy("AuthenticatedUsers", policy => policy.RequireAuthenticatedUser());
-
+                                .AddPolicy("StaffOrAbove", policy => policy.RequireRole("Admin", "Zookeeper", "Veterinarian"));
+                                //already default role for authenticated users is Visitor
 
 builder.Services.AddControllers()
     .AddJsonOptions(opts =>
@@ -75,6 +74,8 @@ builder.Services.AddCors(options =>
               .AllowAnyHeader()
     );
 });
+
+builder.Services.AddHealthChecks(); //to check if the database connection is healthy
 
 var app = builder.Build();
 
@@ -106,10 +107,12 @@ app.UseAuthorization(); //used for future authentication/authorization
 // Scalar UI documentation
 app.MapScalarApiReference(options =>
 {
-    options.Theme = ScalarTheme.Mars; 
+    options.Theme = ScalarTheme.Mars;
     options.WithOpenApiRoutePattern("/swagger/{documentName}/swagger.json");  //needed to point to the correct swagger json endpoint
 });
 
 app.MapControllers();
+
+app.MapHealthChecks("/health"); //see if the API is running
 
 app.Run(); //CTRL + F5(for ScalarUI pop-up)

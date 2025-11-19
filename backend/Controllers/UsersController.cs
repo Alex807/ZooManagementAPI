@@ -111,7 +111,7 @@ namespace backend.Controllers
             await _userService.RemoveRoleFromUserAsync(userId, roleId);
             return NoContent();
         } 
-
+ 
         [HttpPut("{userId}/change-role")]
         [Authorize(Policy = "AdminOnly")]
         public async Task<ActionResult<UserResponseDto>> ChangeUserRole(int userId, [FromBody] ChangeUserRoleDto request)

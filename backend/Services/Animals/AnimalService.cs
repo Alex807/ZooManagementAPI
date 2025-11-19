@@ -249,7 +249,7 @@ public class AnimalService : IAnimalService
 
         return animals.Adapt<List<AnimalResponseDto>>();
     }
-
+ 
     public async Task<IEnumerable<AnimalResponseDto>> GetAnimalsByArrivalDateAsync(DateTime? from, DateTime? to)
     {
         var query = _context.Animals

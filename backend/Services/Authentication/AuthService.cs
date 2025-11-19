@@ -35,7 +35,7 @@ public class AuthService : IAuthService
             throw new InvalidOperationException("Email already exists");
         }
 
-        var roleId = request.RoleId ?? await GetVisitorRoleIdAsync();
+        var roleId = request.RoleId ?? await GetVisitorRoleIdAsync(); //set the default role to Visitor if none provided
         var role = await _context.Roles.FindAsync(roleId);
         if (role == null)
         {
