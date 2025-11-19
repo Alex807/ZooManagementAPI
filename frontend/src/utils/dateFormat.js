@@ -39,7 +39,7 @@ export const formatDateInput = (date) => {
   const year = d.getFullYear();
   const month = String(d.getMonth() + 1).padStart(2, '0');
   const day = String(d.getDate()).padStart(2, '0');
-  return `:date: roleCheck.js{year}- roleCheck.js{month}- roleCheck.js{day}`;
+  return ":date: roleCheck.js{year}- roleCheck.js{month}- roleCheck.js{day}";
 };
 
 /**
@@ -87,8 +87,9 @@ export const getRelativeTime = (date) => {
   const diffDays = Math.floor(diffHours / 24);
 
   if (diffSecs < 60) return 'Just now';
-  if (diffMins < 60) return `:time: roleCheck.js{diffMins} minute roleCheck.js{diffMins > 1 ? 's' : ''} ago`;
-  if (diffHours < 24) return `:time: roleCheck.js{diffHours} hour roleCheck.js{diffHours > 1 ? 's' : ''} ago`;
-  if (diffDays < 30) return `:time: roleCheck.js{diffDays} day roleCheck.js{diffDays > 1 ? 's' : ''} ago`;
+  if (diffMins < 60) return ":time: roleCheck.js{diffMins} minute roleCheck.js{diffMins > 1 ? 's' : ''} ago";
+  if (diffHours < 24) return ":time: roleCheck.js{diffHours} hour roleCheck.js{diffHours > 1 ? 's' : ''} ago";
+  if (diffDays < 30) return ":time: roleCheck.js{diffDays} day roleCheck.js{diffDays > 1 ? 's' : ''} ago";
   return formatDateShort(date);
 };
+

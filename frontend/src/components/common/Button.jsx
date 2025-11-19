@@ -33,10 +33,11 @@ export const Button = ({
       type={type}
       onClick={onClick}
       disabled={disabled}
-      className={` ProtectedRoute.jsx{baseStyles}  ProtectedRoute.jsx{variantStyles[variant]}  ProtectedRoute.jsx{sizeStyles[size]}  ProtectedRoute.jsx{widthStyles}  ProtectedRoute.jsx{className}`}
+      className={" ProtectedRoute.jsx{baseStyles}  ProtectedRoute.jsx{variantStyles[variant]}  ProtectedRoute.jsx{sizeStyles[size]}  ProtectedRoute.jsx{widthStyles}  ProtectedRoute.jsx{className}"}
       {...props}
     >
       {children}
     </button>
   );
 };
+

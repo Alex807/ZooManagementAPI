@@ -82,3 +82,4 @@ export const isZookeeperOrAbove = (userRole) => {
 export const isVeterinarianOrAbove = (userRole) => {
   return hasRole(userRole, 'Veterinarian');
 };
+

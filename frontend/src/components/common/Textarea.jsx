@@ -14,11 +14,11 @@ export const Textarea = ({
   ...props
 }) => {
   return (
-    <div className={`w-full  Select.jsx{className}`}>
+    <div className={"w-full  Select.jsx{className}"}>
       {label && (
-        <label htmlFor={name} className=`block text-sm font-medium text-gray-700 mb-1`>
+        <label htmlFor={name} className="block text-sm font-medium text-gray-700 mb-1">
           {label}
-          {required && <span className=`text-red-500 ml-1`>*</span>}
+          {required && <span className="text-red-500 ml-1">*</span>}
         </label>
       )}
       <textarea
@@ -31,12 +31,13 @@ export const Textarea = ({
         rows={rows}
         required={required}
         disabled={disabled}
-        className={`w-full px-3 py-2 border rounded-lg shadow-sm focus:outline-none focus:ring-2 focus:ring-green-500 focus:border-transparent disabled:bg-gray-100 disabled:cursor-not-allowed resize-y  Select.jsx{
+        className={"w-full px-3 py-2 border rounded-lg shadow-sm focus:outline-none focus:ring-2 focus:ring-green-500 focus:border-transparent disabled:bg-gray-100 disabled:cursor-not-allowed resize-y  Select.jsx{
           error ? 'border-red-500' : 'border-gray-300'
-        }`}
+        }"}
         {...props}
       />
-      {error && <p className=`mt-1 text-sm text-red-500`>{error}</p>}
+      {error && <p className="mt-1 text-sm text-red-500">{error}</p>}
     </div>
   );
 };
+

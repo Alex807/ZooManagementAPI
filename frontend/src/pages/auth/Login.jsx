@@ -63,44 +63,44 @@ export const Login = () => {
 
   return (
     <AuthLayout>
-      <Card title=`Login to Zoo Management`>
+      <Card title="Login to Zoo Management">
         {sessionExpired && (
-          <div className=`mb-4 p-3 bg-amber-100 border border-amber-400 text-amber-700 rounded`>
+          <div className="mb-4 p-3 bg-amber-100 border border-amber-400 text-amber-700 rounded">
             Your session has expired. Please login again.
           </div>
         )}
         {errors.submit && (
-          <div className=`mb-4 p-3 bg-red-100 border border-red-400 text-red-700 rounded`>
+          <div className="mb-4 p-3 bg-red-100 border border-red-400 text-red-700 rounded">
             {errors.submit}
           </div>
         )}
-        <form onSubmit={handleSubmit} className=`space-y-4`>
+        <form onSubmit={handleSubmit} className="space-y-4">
           <Input
-            label=`Username`
-            name=`username`
+            label="Username"
+            name="username"
             value={formData.username}
             onChange={handleChange}
             error={errors.username}
             required
-            autoComplete=`username`
+            autoComplete="username"
           />
           <Input
-            label=`Password`
-            type=`password`
-            name=`password`
+            label="Password"
+            type="password"
+            name="password"
             value={formData.password}
             onChange={handleChange}
             error={errors.password}
             required
-            autoComplete=`current-password`
+            autoComplete="current-password"
           />
-          <Button type=`submit` fullWidth disabled={loading}>
+          <Button type="submit" fullWidth disabled={loading}>
             {loading ? 'Logging in...' : 'Login'}
           </Button>
         </form>
-        <p className=`mt-4 text-center text-sm text-gray-600`>
+        <p className="mt-4 text-center text-sm text-gray-600">
           Don't have an account?{' '}
-          <Link to=`/register` className=`text-green-600 hover:text-green-700 font-medium`>
+          <Link to="/register" className="text-green-600 hover:text-green-700 font-medium">
             Register here
           </Link>
         </p>
@@ -108,3 +108,4 @@ export const Login = () => {
     </AuthLayout>
   );
 };
+

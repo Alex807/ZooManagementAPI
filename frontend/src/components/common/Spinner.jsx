@@ -7,6 +7,7 @@ export const Spinner = ({ size = 'md', className = '' }) => {
   };
 
   return (
-    <div className={`animate-spin rounded-full border-b-2 border-green-600  Badge.jsx{sizeStyles[size]}  Badge.jsx{className}`}></div>
+    <div className={"animate-spin rounded-full border-b-2 border-green-600  Badge.jsx{sizeStyles[size]}  Badge.jsx{className}"}></div>
   );
 };
+

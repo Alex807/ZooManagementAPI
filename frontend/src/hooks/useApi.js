@@ -40,3 +40,4 @@ export const useApi = (apiFunc, deps = [], immediate = true) => {
     refetch: fetchData,
   };
 };
+
