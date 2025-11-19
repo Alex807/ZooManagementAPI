@@ -13,7 +13,7 @@ namespace backend.Models
         public int Id {get; set; }
 
         [Required] 
-        [MaxLength(50)]
+        [MaxLength(50)] 
         public string Name {get; set;} = string.Empty; 
 
         [Column(TypeName = "text")] //use this type to not limit the size 

@@ -32,7 +32,7 @@ public class UserDetailsService : IUserDetailsService
         if (query.Gender.HasValue)
         {
             detailsQuery = detailsQuery.Where(ud => ud.Gender == query.Gender.Value);
-        }
+        } 
 
         if (!string.IsNullOrWhiteSpace(query.Phone))
         {

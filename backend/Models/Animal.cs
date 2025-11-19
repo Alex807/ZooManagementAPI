@@ -15,7 +15,7 @@ namespace backend.Models
         [MaxLength(50)]
         public string Name {get; set; } = string.Empty;
 
-        [Required]
+        [Required] 
         [MaxLength(50)] 
         public string Specie {get; set; } = string.Empty; 
 

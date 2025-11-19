@@ -12,4 +12,4 @@ public interface ICategoryService
     Task<IEnumerable<CategoryResponseDto>> GetCategoriesByNameAsync(string name);
     Task<IEnumerable<CategoryResponseDto>> GetCategoriesByAnimalCountAsync(int? min, int? max);
     Task<IEnumerable<CategoryResponseDto>> GetEmptyCategoriesAsync();
-}
+} 

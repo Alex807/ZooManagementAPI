@@ -32,7 +32,7 @@ namespace backend.Models
         [MaxLength(255)]
         public string HomeAddress { get; set; } = string.Empty;
 
-        [MaxLength(2048)] //increased length for image URL
+        [MaxLength(2048)] //increased length for image URL 
         public string? ImageUrl { get; set; }
  
         [Column(TypeName = "datetime")]
