@@ -1,4 +1,5 @@
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Authorization;
 using backend.DTOs.ImageUpload;
 using backend.Services.ImageUpload;
 
@@ -6,6 +7,7 @@ namespace backend.Controllers;
 
 [ApiController]
 [Route("api/[controller]")]
+[Authorize] // Require authentication for all endpoints
 public class ImageUploadController : ControllerBase
 {
     private readonly IImageUploadService _imageUploadService;

@@ -1,11 +1,13 @@
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Authorization;
 using backend.DTOs.Assignment;
 using backend.Services.Assignments;
 
-namespace backend.Controllers.Assignments;
+namespace backend.Controllers;
 
 [ApiController]
 [Route("api/[controller]")]
+[Authorize]
 public class StaffAnimalAssignmentsController : ControllerBase
 {
     private readonly IStaffAnimalAssignmentService _assignmentService;
@@ -33,6 +35,7 @@ public class StaffAnimalAssignmentsController : ControllerBase
     }
 
     [HttpPost]
+    [Authorize(Policy = "AdminOnly")]
     public async Task<ActionResult<StaffAnimalAssignmentResponseDto>> CreateAssignment([FromBody] CreateAssignmentRequestDto request)
     {
         if (!ModelState.IsValid)
@@ -50,6 +53,7 @@ public class StaffAnimalAssignmentsController : ControllerBase
     }
 
     [HttpPut("{staffId}/{animalId}")]
+    [Authorize(Policy = "AdminOnly")]
     public async Task<ActionResult<StaffAnimalAssignmentResponseDto>> UpdateAssignment(
         int staffId,
         int animalId,
@@ -73,6 +77,7 @@ public class StaffAnimalAssignmentsController : ControllerBase
     }
 
     [HttpDelete("{staffId}/{animalId}")]
+    [Authorize(Policy = "AdminOnly")]
     public async Task<IActionResult> DeleteAssignment(int staffId, int animalId)
     {
         var deleted = await _assignmentService.DeleteAssignmentAsync(staffId, animalId);
@@ -100,7 +105,7 @@ public class StaffAnimalAssignmentsController : ControllerBase
     public async Task<ActionResult<IEnumerable<StaffAnimalAssignmentResponseDto>>> GetAssignmentsWithObservations()
     {
         var assignments = await _assignmentService.GetAssignmentsWithObservationsAsync();
-        return Ok(assignments);
+        return Ok(assignments); 
     }
 
     [HttpGet("search/by-date-range")]

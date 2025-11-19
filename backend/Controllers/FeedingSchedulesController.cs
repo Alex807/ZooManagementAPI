@@ -1,4 +1,5 @@
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Authorization;
 using backend.DTOs.FeedingSchedule;
 using backend.Services.FeedingSchedules;
 using backend.Enums;
@@ -7,6 +8,7 @@ namespace backend.Controllers;
 
 [ApiController]
 [Route("api/[controller]")]
+[Authorize]  // Visitors can see feeding schedules
 public class FeedingSchedulesController : ControllerBase
 {
     private readonly IFeedingScheduleService _feedingScheduleService;
@@ -34,6 +36,7 @@ public class FeedingSchedulesController : ControllerBase
     }
 
     [HttpPost]
+    [Authorize(Policy = "ZookeeperOrAbove")]
     public async Task<ActionResult<FeedingScheduleResponseDto>> CreateFeedingSchedule([FromBody] CreateFeedingScheduleRequestDto request)
     {
         if (!ModelState.IsValid)
@@ -51,6 +54,7 @@ public class FeedingSchedulesController : ControllerBase
     }
 
     [HttpPut("{id}")]
+    [Authorize(Policy = "ZookeeperOrAbove")]
     public async Task<ActionResult<FeedingScheduleResponseDto>> UpdateFeedingSchedule(int id, [FromBody] UpdateFeedingScheduleRequestDto request)
     {
         if (!ModelState.IsValid)
@@ -71,6 +75,7 @@ public class FeedingSchedulesController : ControllerBase
     }
 
     [HttpDelete("{id}")]
+    [Authorize(Policy = "AdminOnly")]
     public async Task<IActionResult> DeleteFeedingSchedule(int id)
     {
         var deleted = await _feedingScheduleService.DeleteFeedingScheduleAsync(id);

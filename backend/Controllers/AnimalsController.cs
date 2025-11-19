@@ -1,4 +1,5 @@
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Authorization;
 using backend.DTOs.Animal;
 using backend.Services.Animals;
 using backend.Enums;
@@ -6,7 +7,8 @@ using backend.Enums;
 namespace backend.Controllers;
 
 [ApiController]
-[Route("api/[controller]")] 
+[Route("api/[controller]")]
+[Authorize]
 public class AnimalsController : ControllerBase
 {
     private readonly IAnimalService _animalService;
@@ -34,6 +36,7 @@ public class AnimalsController : ControllerBase
     }
 
     [HttpPost]
+    [Authorize(Policy = "ZookeeperOrAbove")]
     public async Task<ActionResult<AnimalResponseDto>> CreateAnimal([FromBody] CreateAnimalRequestDto request)
     {
         if (!ModelState.IsValid)
@@ -51,6 +54,7 @@ public class AnimalsController : ControllerBase
     }
 
     [HttpPut("{id}")]
+    [Authorize(Policy = "ZookeeperOrAbove")]
     public async Task<ActionResult<AnimalResponseDto>> UpdateAnimal(int id, [FromBody] UpdateAnimalRequestDto request)
     {
         if (!ModelState.IsValid)
@@ -71,6 +75,7 @@ public class AnimalsController : ControllerBase
     }
 
     [HttpDelete("{id}")]
+    [Authorize(Policy = "AdminOnly")]
     public async Task<IActionResult> DeleteAnimal(int id)
     {
         var deleted = await _animalService.DeleteAnimalAsync(id);

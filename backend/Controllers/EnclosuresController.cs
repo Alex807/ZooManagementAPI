@@ -1,4 +1,5 @@
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Authorization;
 using backend.DTOs.Enclosure;
 using backend.Services.Enclosures;
 
@@ -6,6 +7,7 @@ namespace backend.Controllers;
 
 [ApiController]
 [Route("api/[controller]")]
+[Authorize]
 public class EnclosuresController : ControllerBase
 {
     private readonly IEnclosureService _enclosureService;
@@ -33,6 +35,7 @@ public class EnclosuresController : ControllerBase
     }
 
     [HttpPost]
+    [Authorize(Policy = "AdminOnly")]
     public async Task<ActionResult<EnclosureResponseDto>> CreateEnclosure([FromBody] CreateEnclosureRequestDto request)
     {
         if (!ModelState.IsValid)
@@ -50,6 +53,7 @@ public class EnclosuresController : ControllerBase
     }
 
     [HttpPut("{id}")]
+    [Authorize(Policy = "AdminOnly")]
     public async Task<ActionResult<EnclosureResponseDto>> UpdateEnclosure(int id, [FromBody] UpdateEnclosureRequestDto request)
     {
         if (!ModelState.IsValid)
@@ -70,6 +74,7 @@ public class EnclosuresController : ControllerBase
     }
 
     [HttpDelete("{id}")]
+    [Authorize(Policy = "AdminOnly")]
     public async Task<IActionResult> DeleteEnclosure(int id)
     {
         try
